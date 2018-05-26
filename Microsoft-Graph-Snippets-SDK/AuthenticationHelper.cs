@@ -22,8 +22,12 @@ namespace Microsoft_Graph_Snippets_SDK
         // The Client ID is used by the application to uniquely identify itself to Microsoft Azure Active Directory (AD).
         static string clientId = App.Current.Resources["ida:ClientID"].ToString();
         static string returnUrl = App.Current.Resources["ida:ReturnUrl"].ToString();
-        static string authString = "https://login.microsoftonline.com/common";
-        static string resourceUrl = "https://graph.microsoft.com/";
+        //static string authString = "https://login.microsoftonline.com/common";
+        //static string resourceUrl = "https://graph.microsoft.com/";
+
+        // German Cloud
+        static string authString = "https://login.microsoftonline.de/common";
+        static string resourceUrl = "https://graph.microsoft.de/";
 
         public static string TokenForUser;
         public static DateTimeOffset expiration;
@@ -42,7 +46,7 @@ namespace Microsoft_Graph_Snippets_SDK
                 try
                 {
                     graphClient = new GraphServiceClient(
-                        "https://graph.microsoft.com/v1.0",
+                        "https://graph.microsoft.de/v1.0",
                         new DelegateAuthenticationProvider(
                             async (requestMessage) =>
                             {
@@ -74,8 +78,11 @@ namespace Microsoft_Graph_Snippets_SDK
                 var redirectUri = new Uri(returnUrl);
                 string authority = authString;
                 AuthenticationContext authenticationContext = new AuthenticationContext(authority, false);
+
+                
                 AuthenticationResult userAuthnResult = await authenticationContext.AcquireTokenAsync(resourceUrl,
                     clientId, redirectUri, PromptBehavior.RefreshSession);
+
                 TokenForUser = userAuthnResult.AccessToken;
                 expiration = userAuthnResult.ExpiresOn;
             }

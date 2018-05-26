@@ -34,6 +34,13 @@ namespace Microsoft_Graph_Snippets_SDK
                     Debug.WriteLine("Got user: " + currentUserName);
                 }
 
+                var skus = await graphClient.SubscribedSkus.Request().GetAsync();
+                foreach (var sku in skus)
+                {
+                    var text = "ID - " + sku.Id.ToString() + "    SKU Id - " + sku.SkuId.ToString() + "    SkuPartNumber - " + sku.SkuPartNumber + "    CapabilityStatus - " + sku.CapabilityStatus;
+                    System.IO.File.AppendAllText(@"C:\Users\anikris\Desktop\Scratch\PD.logs", text);
+                }
+
             }
 
 
